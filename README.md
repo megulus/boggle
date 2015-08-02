@@ -11,7 +11,7 @@ Super Big Boggle
 
 Classic Boggle was developed in the 1970s. It uses 16 dice (4x4 board) with the following letter combinations:
 
-'''
+```
 AACIOT
 ABILTY
 ABJMOQu
@@ -28,12 +28,12 @@ EGINTV
 EHINPS
 ELPSTU
 GILRUW
-'''
+```
 
 New Boggle (the version sold since ~2008, according to the internet) was created to address some problems in the letter
 frequency of Classic Boggle. Its 16 dice have the following letter combinations:
 
-'''
+```
 AAEEGN
 ABBJOO
 ACHOPS
@@ -50,11 +50,11 @@ EIOSST
 ELRTTY
 HIMNUQu
 HLNNRZ
-'''
+```
 
 Big Boggle has 25 dice (5x5 board) with the following letter combinations:
 
-'''
+```
 aaafrs
 aaeeee
 aafirs
@@ -84,11 +84,11 @@ gorrvw
 iprrry
 nootuw
 ooottu
-'''
+```
 
 Super Big Boggle has 36 dice (6x6 board) with the following letter combinations:
 
-'''
+```
 AAAFRS
 AAEEEE
 AAEEOO
@@ -130,4 +130,4 @@ IPRSYY
 JKQuWXZ
 NOOTUW
 OOOTTU
-'''
+```
