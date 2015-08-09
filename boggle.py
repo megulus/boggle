@@ -2,6 +2,10 @@ __author__ = 'megdahlgren'
 
 import random
 import math
+import time
+import enchant
+
+
 
 
 class BoggleDie(object):
@@ -88,13 +92,7 @@ class BoggleBoard(object):
         for each_tuple in coord_list:
             if self.has_word_starting_at(word, each_tuple, squares_crossed):
                 return True
-        '''
-        for i in range(self.board_dim):
-            for j in range(self.board_dim):
-                if self.has_word_starting_at(word, (i, j), squares_crossed):
-                    return True
-        return False
-        '''
+
 
 
     def has_word_starting_at(self, word, start_tile, squares_crossed):
@@ -104,7 +102,6 @@ class BoggleBoard(object):
         :param squares_crossed: list of tuples
         :return: True or False
         '''
-        print word, start_tile, squares_crossed
         if word == '':
             return True
         else:
@@ -123,15 +120,44 @@ class BoggleBoard(object):
 
 
 
+class BoggleGame(object):
+    def __init__(self, test_board=False):
+        if test_board == True:
+            self.board = BoggleBoard(test_board = True)
+        else:
+            self.board = BoggleBoard()
+        self.user_word_input = set()
+        self.valid_words = enchant.Dict('en_US')
+
+    def score_game(self, set_of_words, min_word_length=3):
+        score = 0
+        print 'Words scored:'
+        for word in set_of_words:
+            if self.valid_words.check(word):
+                if self.board.has_word(word, self.board.board_coordinates):
+                    word_score = len(word) - min_word_length + 1
+                    score = score + word_score
+                    print word, word_score, 'point(s)'
+        return score
+
+
+    def run_game(self, seconds=180, min_word_length=3):
+        self.board.print_board()
+        time_up = time.time() + seconds
+        while time.time() < time_up:
+            user_input = raw_input("Enter word (minimum 3 letters): ")
+            if len(user_input) >= min_word_length:
+                self.user_word_input.add(user_input)
+        print "Time up."
+        score = self.score_game(self.user_word_input, min_word_length=3)
+        print "Total Score:", score
+
 
 
 def main():
-    board = BoggleBoard(test_board=True)
-    board.print_board()
-    if board.has_word('QUESTION', board.board_coordinates):
-        print 'Yes'
-    else:
-        print 'Nem'
+    game = BoggleGame(test_board=True)
+    game.run_game(seconds=60)
+
 
 
 
