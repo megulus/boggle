@@ -16,18 +16,20 @@ A word of the minimum length (according to the scoring variant used) is worth 1 
 
 The current implementation is a simple command-line version of New Boggle (see Boggle Variants). It prints a 4x4 grid of letters. The player has three minutes to enter words via the command line. The player's input is first screened for the minimum word length; if it passes, it is added to a set (so that duplicate entries are automatically screened out). After time is up, the words in the set are validated (i.e., that their paths on the board are made up of adjacent, non-repeated tiles and the words themselves are standard English words according to the PyEnchant library).
 
-**BUG: despite the timer on game play, the game doesn't end unless the player presses enter *after* the timer ends.** I need to read more about [multiprocessing](http://stackoverflow.com/questions/14920384/stop-code-after-time-period) to learn how to fix this.
+**BUG: despite the timer on game play, the game doesn't end unless the player presses enter *after* the timer ends.**
+
+I need to read more about [multiprocessing](http://stackoverflow.com/questions/14920384/stop-code-after-time-period) to learn how to fix this bug.
 
 ### Future Improvements
 
-```
- * **ASAP: Fix bug preventing game from ending if user does nothing.**
+
+ * **HIGH PRIORITY**: Fix bug preventing game from ending if user does nothing.
  * Add function that finds all words on board for "play-the-computer" version of game
  * Version that allows choice of board versions (Classic, Big Boggle, Super Big Boggle)
  * Implement multi-player version
  * Version that allows choice of alternate scoring variants for multi-player game (Unique Words Scoring, Word Wagering)
  * GUI or web-based version
- ```
+
 
 ## Scoring Variants
 
@@ -66,10 +68,10 @@ Each player must guess:
 ## Boggle Variants
 
 As I discovered when I started researching boggle letter frequency, there are multiple versions of Boggle, which are:
-Classic Boggle
-New Boggle
-Big Boggle
-Super Big Boggle
+- Classic Boggle
+- New Boggle
+- Big Boggle
+- Super Big Boggle
 
 Classic Boggle was developed in the 1970s. It uses 16 dice (4x4 board) with the following letter combinations:
 
