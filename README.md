@@ -9,7 +9,8 @@ A boggle board has 16, 25 or 36 lettered dice, depending on the version. The dic
  * be formed from adjacent (in any direction), non-repeating dice
  * be a standard Enlgish word (no abbreviations, proper names, etc.)
 
- A word of the minimum length (according to the scoring variant used) is worth 1 point, and so on up.
+
+A word of the minimum length (according to the scoring variant used) is worth 1 point, and so on up.
 
 ### Current Implementation
 
@@ -19,12 +20,14 @@ The current implementation is a simple command-line version of New Boggle (see B
 
 ### Future Improvements
 
- * **ASAP: Fix bug preventing game from ending if no user does nothing.**
+```
+ * **ASAP: Fix bug preventing game from ending if user does nothing.**
  * Add function that finds all words on board for "play-the-computer" version of game
  * Version that allows choice of board versions (Classic, Big Boggle, Super Big Boggle)
  * Implement multi-player version
  * Version that allows choice of alternate scoring variants for multi-player game (Unique Words Scoring, Word Wagering)
  * GUI or web-based version
+ ```
 
 ## Scoring Variants
 
@@ -52,7 +55,7 @@ I don't know whether some of these scoring variants are part of the official rul
    * if all other players have found the word *and* no other player has guessed the same word for this category, the player gets 2X the word's point value added to their score
    * if all other players have found the word, but another player has also guessed that everyone would find it, all players who have guessed the word lose one point
    * if at least one other player has not found the word, the player who guessed it loses 2X the word's point value
-
+```
 
 ## Boggle Variants
 
