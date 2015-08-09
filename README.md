@@ -35,22 +35,23 @@ I don't know whether some of these scoring variants are part of the official rul
 
 ### Single-Player Scoring
 
-#### Simple Scoring
+##### Simple Scoring
  * This is implemented in the basic version of the game. It simply scores all of the valid words entered by the user (minimum-length word = 1 point, etc.)
-#### Play the Computer
+
+##### Play the Computer
  * In this version, your score is compared to the theoretical maximum score (for all the possible words on the board)
 
 ### Multi-Player Scoring
 
-#### Simple Multi-Player Scoring
+##### Simple Multi-Player Scoring
 
 The player with the most points wins the game.
 
-#### Unique Words Scoring
+##### Unique Words Scoring
 
 Only words that an individual player has found (and no other player) count towards that player's score.
 
-#### Word Wagering
+##### Word Wagering
 
 Each player must guess:
   * a word that only he/she has found
