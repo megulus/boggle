@@ -4,6 +4,7 @@ import random
 import math
 import time
 import enchant
+import multiprocessing
 
 
 
@@ -140,14 +141,32 @@ class BoggleGame(object):
                     print word, word_score, 'point(s)'
         return score
 
+    def get_user_input(self, num_seconds, min_word_length):
+        '''
+        getting user input in separate function so that I can run it as a separate process
+        :return: string entered by user
+        '''
+        time_up = time.time() + num_seconds
+        while time.time() < time_up:
+            user_input = raw_input('Enter word (minimum 3 letters): ')
+            if len(user_input) >= min_word_length:
+                self.user_word_input.add(user_input)
 
-    def run_game(self, seconds=180, min_word_length=3):
+
+    def run_game(self, num_seconds=180, min_word_length=3):
         self.board.print_board()
-        time_up = time.time() + seconds
+        time_up = time.time() + num_seconds
+        p = multiprocessing.Process(target=self.get_user_input, args=(num_seconds, min_word_length,))
+        p.start()
+        time.sleep(num_seconds)
+        #p.terminate()
+        p.join()
+        '''
         while time.time() < time_up:
             user_input = raw_input("Enter word (minimum 3 letters): ")
             if len(user_input) >= min_word_length:
                 self.user_word_input.add(user_input)
+        '''
         print "Time up."
         score = self.score_game(self.user_word_input, min_word_length=3)
         print "Total Score:", score
@@ -156,7 +175,7 @@ class BoggleGame(object):
 
 def main():
     game = BoggleGame(test_board=True)
-    game.run_game(seconds=60)
+    game.run_game(num_seconds=180)
 
 
 
