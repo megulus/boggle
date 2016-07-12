@@ -1,18 +1,12 @@
-__author__ = 'megdahlgren'
-
 import random
 import math
-import time
-import enchant
 import multiprocessing
-
-
+import sys
+import os
 
 
 class BoggleDie(object):
-    '''
-    currently, this method will return instances of dice for game of "New Boggle" (game updated c. 2008)
-    '''
+
     def __init__(self, letters):
         self.letters = letters
         self.face = random.choice(letters)
@@ -119,6 +113,18 @@ class BoggleBoard(object):
                     squares_crossed.remove(start_tile)
         return False
 
+class BoggleDictionary(object):
+    def __init__(self):
+        #self.words = set([])
+        self.words = set([])
+        try:
+            with open('words.txt', 'r') as wordfile:
+                lines = wordfile.readlines()
+                for line in lines:
+                    self.words.add(line.rstrip())
+        except IOError:
+            print 'Dictionary file not found.'
+            sys.exit()
 
 
 class BoggleGame(object):
@@ -127,62 +133,57 @@ class BoggleGame(object):
             self.board = BoggleBoard(test_board = True)
         else:
             self.board = BoggleBoard()
-        self.user_word_input = set()
-        self.valid_words = enchant.Dict('en_US')
+        self.valid_words = BoggleDictionary().words
 
-    def score_game(self, set_of_words, min_word_length=3):
+
+    def score_game(self, word_queue, min_word_length=3):
         score = 0
         print 'Words scored:'
-        for word in set_of_words:
-            if self.valid_words.check(word):
-                if self.board.has_word(word, self.board.board_coordinates):
-                    word_score = len(word) - min_word_length + 1
-                    score = score + word_score
-                    print word, word_score, 'point(s)'
+        scored_words = set([])
+        while not word_queue.empty():
+            word = word_queue.get()
+            if word not in scored_words:
+                if word in self.valid_words:
+                    if self.board.has_word(word, self.board.board_coordinates):
+                        word_score = len(word) - min_word_length + 1
+                        score = score + word_score
+                        print word, word_score, 'point(s)'
+                        scored_words.add(word)
         return score
 
-    def get_user_input(self, num_seconds, min_word_length):
+
+    def get_user_input(self, min_word_length, word_queue, fileno):
         '''
-        getting user input in separate function so that I can run it as a separate process
+        getting user input in separate function so it can run as separate process
         :return: string entered by user
         '''
-        time_up = time.time() + num_seconds
-        while time.time() < time_up:
-            user_input = raw_input('Enter word (minimum 3 letters): ')
+        sys.stdin = os.fdopen(fileno)
+        while True:
+            user_input = raw_input('Enter a word: ')
             if len(user_input) >= min_word_length:
-                self.user_word_input.add(user_input)
+                word_queue.put_nowait(user_input)
+
 
 
     def run_game(self, num_seconds=180, min_word_length=3):
         self.board.print_board()
-        time_up = time.time() + num_seconds
-        p = multiprocessing.Process(target=self.get_user_input, args=(num_seconds, min_word_length,))
+        input_word_queue = multiprocessing.Queue()
+        fn = sys.stdin.fileno() # get file descriptor to pass to get_user_input
+        p = multiprocessing.Process(target=self.get_user_input, args=(min_word_length, input_word_queue, fn))
         p.start()
-        time.sleep(num_seconds)
-        #p.terminate()
-        p.join()
-        '''
-        while time.time() < time_up:
-            user_input = raw_input("Enter word (minimum 3 letters): ")
-            if len(user_input) >= min_word_length:
-                self.user_word_input.add(user_input)
-        '''
-        print "Time up."
-        score = self.score_game(self.user_word_input, min_word_length=3)
+        p.join(num_seconds)
+        if p.is_alive():
+            print "Sorry, time's up!"
+            p.terminate()
+            p.join()
+        score = self.score_game(input_word_queue, min_word_length=3)
         print "Total Score:", score
 
 
 
-def main():
-    game = BoggleGame(test_board=True)
-    game.run_game(num_seconds=180)
-
-
-
-
-
 if __name__ == '__main__':
-    main()
+    game = BoggleGame(test_board=True)
+    game.run_game(num_seconds=10)
 
 
 
