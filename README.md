@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Python implementation of Hasbro's Boggle. The first version of the game implements the "New Boggle" variant (see 'Boggle Variants'). Other Boggle and scoring variants (see 'scoring variants') to come in future versions.
+This is a Python implementation of the classic Boggle word-search game (by Hasbro). The first version of the game implements the "New Boggle" variant (see 'Boggle Variants'). Other Boggle and scoring variants (see 'scoring variants') to come in future versions.
 
 A boggle board has 16, 25 or 36 lettered dice, depending on the version. The dice are arranged in a square and shuffled at the beginning of a game. The player then has 3 minutes to find as many words as possible on the board. A valid word must:
  * be at least 3 letters long in Classic/New Boggle (4 letters long in more challenging variants)
@@ -16,14 +16,11 @@ A word of the minimum length (according to the scoring variant used) is worth 1 
 
 The current implementation is a simple command-line version of New Boggle (see Boggle Variants). It prints a 4x4 grid of letters. The player has three minutes to enter words via the command line. The player's input is first screened for the minimum word length; if it passes, it is added to a set (so that duplicate entries are automatically screened out). After time is up, the words in the set are validated (i.e., that their paths on the board are made up of adjacent, non-repeated tiles and the words themselves are standard English words according to the PyEnchant library).
 
-**BUG: despite the timer on game play, the game doesn't end unless the player presses enter *after* the timer ends.**
-
-I need to read more about [multiprocessing](http://stackoverflow.com/questions/14920384/stop-code-after-time-period) to learn how to fix this bug.
 
 ### Future Improvements
 
 
- * **HIGH PRIORITY**: Fix bug preventing game from ending if user does nothing.
+ * <s>**HIGH PRIORITY**: Fix bug preventing game from ending if user does nothing.</s> Fixed.
  * Add function that finds all words on board for "play-the-computer" version of game
  * Version that allows choice of board versions (Classic, Big Boggle, Super Big Boggle)
  * Implement multi-player version
