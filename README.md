@@ -14,7 +14,7 @@ A word of the minimum length (according to the scoring variant used) is worth 1 
 
 ### Current Implementation
 
-The current implementation is a simple command-line version of New Boggle (see Boggle Variants). It prints a 4x4 grid of letters. The player has three minutes to enter words via the command line. The player's input is first screened for the minimum word length; if it passes, it is added to a set (so that duplicate entries are automatically screened out). After time is up, the words in the set are validated (i.e., that their paths on the board are made up of adjacent, non-repeated tiles and the words themselves are standard English words according to the PyEnchant library).
+The current implementation is a simple command-line version of New Boggle (see Boggle Variants). It prints a 4x4 grid of letters. The player has three minutes to enter words via the command line. The player's input is first screened for the minimum word length; if it passes, it is added to a set (so that duplicate entries are automatically screened out). After time is up, the words in the set are validated (i.e., that their paths on the board are made up of adjacent, non-repeated tiles and the words themselves are standard English words according to list of 100,000+ English-language words).
 
 
 ### Future Improvements
