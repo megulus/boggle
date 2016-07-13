@@ -21,6 +21,7 @@ The current implementation is a simple command-line version of New Boggle (see B
 
 
  * <s>**HIGH PRIORITY**: Fix bug preventing game from ending if user does nothing.</s> Fixed.
+ * Add feature to save top 10 scores and display them when game finishes (a la 1980s arcade games)
  * Add function that finds all words on board for "play-the-computer" version of game
  * Version that allows choice of board versions (Classic, Big Boggle, Super Big Boggle)
  * Implement multi-player version
