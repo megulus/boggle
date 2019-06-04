@@ -3,7 +3,7 @@ import math
 import multiprocessing
 import sys
 import os
-
+import json
 
 class BoggleDie(object):
 
@@ -136,6 +136,32 @@ class BoggleGame(object):
         self.valid_words = BoggleDictionary().words
 
 
+    def save_top_score(self, new_score):
+        try:
+            # read from the file if it exists
+            with open('scores.json', 'r') as infile:
+                scores = json.load(infile)
+            all_scores = scores['all-scores']
+            if new_score > all_scores[-1]:
+                all_scores.append(new_score)
+                all_scores.sort(reverse=True)
+                all_scores.pop()
+                print all_scores
+                with open('scores.json', 'w') as outfile:
+                    scores['all-scores'] = all_scores
+                    outstring = json.dumps(scores)
+                    outfile.write(outstring)
+        except IOError:
+            with open('scores.json', 'w') as outfile:
+                scores = {
+                    'all-scores': [0]*10
+                }
+                scores['all-scores'][0] = new_score
+                outstring = json.dumps(scores)
+                outfile.write(outstring)
+
+
+
     def score_game(self, word_queue, min_word_length=3):
         score = 0
         print 'Words scored:'
@@ -166,7 +192,7 @@ class BoggleGame(object):
 
 
     def run_game(self, num_seconds=180, min_word_length=3):
-        self.board.print_board()
+        '''self.board.print_board()
         input_word_queue = multiprocessing.Queue()
         fn = sys.stdin.fileno() # get file descriptor to pass to get_user_input
         p = multiprocessing.Process(target=self.get_user_input, args=(min_word_length, input_word_queue, fn))
@@ -176,8 +202,9 @@ class BoggleGame(object):
             print "Sorry, time's up!"
             p.terminate()
             p.join()
-        score = self.score_game(input_word_queue, min_word_length=3)
-        print "Total Score:", score
+        score = self.score_game(input_word_queue, min_word_length=3)'''
+        #print "Total Score:", score
+        self.save_top_score(2)
 
 
 
